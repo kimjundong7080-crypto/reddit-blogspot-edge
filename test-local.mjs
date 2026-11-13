@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { onRequestGet as feed } from './functions/api/blogger-feed.js';
 import { onRequestGet as post } from './functions/api/blogger-post.js';
 import { onRequestGet as health } from './functions/api/health.js';
@@ -15,17 +16,30 @@ const ctx = (url) => ({
 });
 
 const h = await health();
-console.log('health', h.status, (await h.json()).ok);
+const hj = await h.json();
+assert.equal(h.status, 200);
+assert.equal(hj.ok, true);
+assert.equal(hj.service, 'reddit-blogspot-edge');
+console.log('health ok');
 
 const f = await feed(ctx('http://localhost/api/blogger-feed?max=3'));
+assert.equal(f.status, 200);
+assert.equal(f.headers.get('access-control-allow-origin'), '*');
 const fj = await f.json();
-console.log('feed', f.status, 'entries=', fj.feed?.entry?.length, 'cors=', f.headers.get('access-control-allow-origin'));
+assert.ok(Array.isArray(fj.feed?.entry) && fj.feed.entry.length > 0, 'feed has entries');
+console.log('feed ok entries=', fj.feed.entry.length);
 
 const p = await post(ctx('http://localhost/api/blogger-post?path=/2026/10/blog-post_343.html'));
+assert.equal(p.status, 200);
 const pt = await p.text();
-console.log('post', p.status, 'html=', pt.length, 'hasPost=', pt.includes('post-outer-container'));
+assert.ok(pt.length > 1000, 'post html is not empty');
+assert.ok(pt.includes('post-outer-container'), 'post html contains post container');
+console.log('post ok bytes=', pt.length);
 
 const bad = await post(ctx('http://localhost/api/blogger-post?url=https%3A%2F%2Fevil.example%2Fx.html'));
-console.log('bad', bad.status, (await bad.json()).error);
+assert.equal(bad.status, 400);
+assert.equal((await bad.json()).error, 'invalid_post_url');
+console.log('allowlist ok');
 
 await Promise.all(pending);
+console.log('all tests passed');
