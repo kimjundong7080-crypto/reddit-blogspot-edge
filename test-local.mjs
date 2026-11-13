@@ -28,6 +28,7 @@ if (f.status === 429) {
 } else {
   assert.equal(f.status, 200);
   assert.equal(f.headers.get('access-control-allow-origin'), '*');
+  assert.ok(['HIT', 'MISS', 'BYPASS'].includes(f.headers.get('x-edge-cache')), 'cache header present');
   const fj = await f.json();
   assert.ok(Array.isArray(fj.feed?.entry) && fj.feed.entry.length > 0, 'feed has entries');
   console.log('feed ok entries=', fj.feed.entry.length);
@@ -38,6 +39,7 @@ if (p.status === 429) {
   console.warn('post skipped: upstream 429 (live Blogger rate limit)');
 } else {
   assert.equal(p.status, 200);
+  assert.ok(['HIT', 'MISS', 'BYPASS'].includes(p.headers.get('x-edge-cache')), 'cache header present');
   const pt = await p.text();
   assert.ok(pt.length > 1000, 'post html is not empty');
   assert.ok(pt.includes('post-outer-container'), 'post html contains post container');

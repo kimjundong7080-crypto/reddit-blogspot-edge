@@ -21,7 +21,7 @@ export async function onRequestGet(context) {
     const upstream = await cachedFetch(context, target, 300);
     const headers = new Headers(upstream.headers);
     for (const [key, value] of Object.entries(CORS_HEADERS)) headers.set(key, value);
-    headers.set('X-Edge-Cache', upstream.headers.get('CF-Cache-Status') || 'EDGE');
+    headers.set('X-CF-Cache', upstream.headers.get('CF-Cache-Status') || 'EDGE');
     headers.set('X-Blogger-Upstream', BLOG_ORIGIN);
     return new Response(upstream.body, {
       status: upstream.status,

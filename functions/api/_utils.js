@@ -62,7 +62,15 @@ export async function cachedFetch(context, target, ttl = 300) {
   const cache = globalThis.caches?.default;
   if (cache) {
     const hit = await cache.match(target);
-    if (hit) return hit;
+    if (hit) {
+      const headers = new Headers(hit.headers);
+      headers.set('X-Edge-Cache', 'HIT');
+      return new Response(hit.body, {
+        status: hit.status,
+        statusText: hit.statusText,
+        headers
+      });
+    }
   }
 
   const upstream = await fetch(target, {
@@ -80,6 +88,7 @@ export async function cachedFetch(context, target, ttl = 300) {
   headers.delete('set-cookie');
   headers.delete('content-security-policy');
   headers.set('Cache-Control', `public, max-age=60, s-maxage=${ttl}`);
+  headers.set('X-Edge-Cache', cache ? 'MISS' : 'BYPASS');
   const response = new Response(upstream.body, {
     status: upstream.status,
     statusText: upstream.statusText,
