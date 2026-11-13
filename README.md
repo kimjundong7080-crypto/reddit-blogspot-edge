@@ -76,6 +76,19 @@ fetch(EDGE + '/api/blogger-feed?max=500')
 
 The current `11_infinite.js` still fetches Blogger directly. The next step is switching its feed/post fetch calls to this edge API and adding `<link rel="preconnect">` for the Pages host.
 
+## GitHub auto deploy
+
+This repository is intended to be connected to the Pages project:
+
+- Repository: `kimjundong7080-crypto/reddit-blogspot-edge`
+- Pages project: `reddit-blogspot-edge`
+- Production branch: `main`
+- Build command: none
+- Build output directory: `public`
+- Functions directory: `functions/`
+
+In Cloudflare Pages → project → Settings → Builds & deployments → Git repository, connect the repository above. Pushes to `main` then deploy automatically.
+
 ## Notes
 
 - Cache key is the upstream URL; responses are cached 5 minutes.
