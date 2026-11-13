@@ -96,3 +96,5 @@ In Cloudflare Pages → project → Settings → Builds & deployments → Git re
 - Functions only handle `GET`/`OPTIONS`.
 
 <!-- auto deploy check: 2026-11-13 -->
+
+<!-- auto deploy verified: 2026-11-13 -->
