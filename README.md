@@ -2,8 +2,8 @@
 
 Cloudflare Pages Functions for the Reddit-style Blogger theme at **prfom121.blogspot.com**.
 
-**Production:** https://reddit-blogspot-edge-git.pages.dev  
-**Pages project:** `reddit-blogspot-edge-git` (Git-connected)  
+**Production:** https://reddit-blogspot-edge.pages.dev  
+**Pages project:** `reddit-blogspot-edge` (Git-connected)  
 **Deployed:** 2026-11-13
 
 ## Purpose
@@ -57,7 +57,7 @@ Non-interactive:
 ```powershell
 $env:CLOUDFLARE_API_TOKEN = "..."
 $env:CLOUDFLARE_ACCOUNT_ID = "..."
-npx wrangler pages deploy public --project-name reddit-blogspot-edge-git --branch main
+npx wrangler pages deploy public --project-name reddit-blogspot-edge --branch main
 ```
 
 Required token permissions:
@@ -70,7 +70,7 @@ Required token permissions:
 Use the Pages URL in the Blogger loader:
 
 ```js
-const EDGE = 'https://reddit-blogspot-edge-git.pages.dev';
+const EDGE = 'https://reddit-blogspot-edge.pages.dev';
 fetch(EDGE + '/api/blogger-feed?max=500')
 ```
 
@@ -81,7 +81,7 @@ The live `11_infinite.js` (CDN `v1.0.2`) uses this edge API and falls back to Bl
 This repository is intended to be connected to the Pages project:
 
 - Repository: `kimjundong7080-crypto/reddit-blogspot-edge`
-- Pages project: `reddit-blogspot-edge-git`
+- Pages project: `reddit-blogspot-edge`
 - Production branch: `main`
 - Build command: none
 - Build output directory: `public`
