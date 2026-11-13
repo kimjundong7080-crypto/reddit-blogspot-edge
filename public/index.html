@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reddit Blogspot Edge</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#f7f7f8;--card:#fff;--text:#1a1a1b;--muted:#667085;--line:#e5e7eb;--accent:#ff4500;--blue:#0079d3}
+    @media(prefers-color-scheme:dark){:root{--bg:#0b0b0b;--card:#161718;--text:#f2f3f5;--muted:#98a2b3;--line:#2a2a2a;--blue:#4fbcff}}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{max-width:780px;margin:0 auto;padding:56px 20px}
+    .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);margin-right:8px}
+    h1{font-size:28px;margin:0 0 6px;letter-spacing:-.02em}
+    p{color:var(--muted);margin:0 0 24px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0}
+    h2{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+    code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    code{font-size:13px;background:rgba(127,127,127,.12);padding:2px 6px;border-radius:5px}
+    pre{overflow:auto;background:rgba(127,127,127,.08);padding:12px;border-radius:8px;font-size:12px;line-height:1.5}
+    a{color:var(--blue)}
+    ul{padding-left:20px;margin:8px 0}
+    .ok{color:#22c55e;font-weight:700}
+  </style>
+</head>
+<body>
+<main>
+  <h1><span class="dot"></span>Reddit Blogspot Edge</h1>
+  <p>Cloudflare Pages Functions for <strong>prfom121.blogspot.com</strong>.</p>
+
+  <div class="card">
+    <h2>Status</h2>
+    <p style="margin:0">Service <span class="ok">online</span> · <a href="/api/health">/api/health</a></p>
+  </div>
+
+  <div class="card">
+    <h2>Endpoints</h2>
+    <ul>
+      <li><a href="/api/blogger-feed?max=5">/api/blogger-feed?max=5</a> — Blogger JSON feed, edge cached</li>
+      <li><a href="/api/blogger-post?path=/2026/10/blog-post_343.html">/api/blogger-post?path=…</a> — post HTML proxy</li>
+    </ul>
+    <pre>GET /api/blogger-feed?max=500
+GET /api/blogger-post?url=https%3A%2F%2Fprfom121.blogspot.com%2F2026%2F10%2Fpost.html
+GET /api/blogger-post?path=/2026/10/post.html</pre>
+  </div>
+
+  <div class="card">
+    <h2>Security</h2>
+    <p style="margin:0">Read-only. Only <code>prfom121.blogspot.com</code> feed/post URLs are accepted. Responses are cached at the edge for 5 minutes.</p>
+  </div>
+</main>
+</body>
+</html>

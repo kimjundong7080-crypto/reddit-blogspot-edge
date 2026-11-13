@@ -1,0 +1,19 @@
+﻿{
+    "name":  "reddit-blogspot-edge",
+    "private":  true,
+    "version":  "1.0.0",
+    "description":  "Cloudflare Pages Functions for the Reddit-style Blogger theme",
+    "scripts":  {
+                    "dev":  "wrangler pages dev public",
+                    "deploy":  "wrangler pages deploy public",
+                    "test":  "node test-local.mjs"
+                },
+    "devDependencies":  {
+                            "wrangler":  "latest"
+                        },
+    "allowScripts":  {
+                         "esbuild@0.28.2":  true,
+                         "workerd@1.20261110.1":  true
+                     },
+    "type":  "module"
+}
