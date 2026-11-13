@@ -1,4 +1,4 @@
-﻿{
+{
     "name":  "reddit-blogspot-edge",
     "private":  true,
     "version":  "1.0.0",
@@ -6,7 +6,8 @@
     "scripts":  {
                     "dev":  "wrangler pages dev public",
                     "deploy":  "wrangler pages deploy public",
-                    "test":  "node test-local.mjs"
+                    "test":  "node test-local.mjs",
+                    "monitor":  "node monitor.mjs"
                 },
     "devDependencies":  {
                             "wrangler":  "latest"

@@ -89,6 +89,23 @@ This repository is intended to be connected to the Pages project:
 
 In Cloudflare Pages → project → Settings → Builds & deployments → Git repository, the repository above is connected. Pushes to `main` deploy automatically.
 
+## Monitoring
+
+Every feed/post response includes:
+
+- `X-Edge-Cache: HIT | MISS | BYPASS`
+- `X-CF-Cache: ...` (feed only)
+
+`npm run monitor` checks health, warms the edge cache, then verifies feed/post and computes the cache HIT rate.
+
+GitHub Actions runs the monitor every 15 minutes. On failure it:
+
+- fails the workflow (GitHub notification)
+- creates or updates an open issue labeled `edge-alert`
+- includes the cache HIT rate and 429/5xx details
+
+Alert threshold: status 429, any 5xx, or cache HIT rate below 80%.
+
 ## Notes
 
 - Cache key is the upstream URL; responses are cached 5 minutes.
