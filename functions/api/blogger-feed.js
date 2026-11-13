@@ -23,6 +23,9 @@ export async function onRequestGet(context) {
     for (const [key, value] of Object.entries(CORS_HEADERS)) headers.set(key, value);
     headers.set('X-CF-Cache', upstream.headers.get('CF-Cache-Status') || 'EDGE');
     headers.set('X-Blogger-Upstream', BLOG_ORIGIN);
+    headers.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400, stale-if-error=86400');
+    headers.set('CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=86400, stale-if-error=86400');
+    headers.set('Vary', 'Accept-Encoding');
     return new Response(upstream.body, {
       status: upstream.status,
       headers

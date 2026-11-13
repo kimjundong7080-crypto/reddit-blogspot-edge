@@ -87,7 +87,9 @@ export async function cachedFetch(context, target, ttl = 300) {
   const headers = new Headers(upstream.headers);
   headers.delete('set-cookie');
   headers.delete('content-security-policy');
-  headers.set('Cache-Control', `public, max-age=60, s-maxage=${ttl}`);
+  headers.set('Cache-Control', `public, max-age=60, s-maxage=${ttl}, stale-while-revalidate=86400, stale-if-error=86400`);
+  headers.set('CDN-Cache-Control', `public, max-age=${ttl}, stale-while-revalidate=86400, stale-if-error=86400`);
+  headers.set('Vary', 'Accept-Encoding');
   headers.set('X-Edge-Cache', cache ? 'MISS' : 'BYPASS');
   const response = new Response(upstream.body, {
     status: upstream.status,
