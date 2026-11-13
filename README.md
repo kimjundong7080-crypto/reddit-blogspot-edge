@@ -94,3 +94,5 @@ In Cloudflare Pages → project → Settings → Builds & deployments → Git re
 - Cache key is the upstream URL; responses are cached 5 minutes.
 - `Set-Cookie` and `Content-Security-Policy` are stripped from proxied responses.
 - Functions only handle `GET`/`OPTIONS`.
+
+<!-- auto deploy check: 2026-11-13 -->
