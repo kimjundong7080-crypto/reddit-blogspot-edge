@@ -2,8 +2,8 @@
 
 Cloudflare Pages Functions for the Reddit-style Blogger theme at **prfom121.blogspot.com**.
 
-**Production:** https://reddit-blogspot-edge.pages.dev  
-**Pages project:** `reddit-blogspot-edge`  
+**Production:** https://reddit-blogspot-edge-git.pages.dev  
+**Pages project:** `reddit-blogspot-edge-git` (Git-connected)  
 **Deployed:** 2026-11-13
 
 ## Purpose
@@ -44,11 +44,11 @@ Wrangler provides a local Cache API in Pages dev.
 
 ## Deploy
 
-```bash
-# one-time, after `wrangler login` or CLOUDFLARE_API_TOKEN is set
-npx wrangler pages project create reddit-blogspot-edge --production-branch main
+GitHub auto deploy is active: every push to `main` builds and deploys the project.
 
-# deploy
+Manual fallback:
+
+```bash
 npm run deploy
 ```
 
@@ -57,7 +57,7 @@ Non-interactive:
 ```powershell
 $env:CLOUDFLARE_API_TOKEN = "..."
 $env:CLOUDFLARE_ACCOUNT_ID = "..."
-npx wrangler pages deploy public --project-name reddit-blogspot-edge --branch main
+npx wrangler pages deploy public --project-name reddit-blogspot-edge-git --branch main
 ```
 
 Required token permissions:
@@ -70,24 +70,24 @@ Required token permissions:
 Use the Pages URL in the Blogger loader:
 
 ```js
-const EDGE = 'https://reddit-blogspot-edge.pages.dev';
+const EDGE = 'https://reddit-blogspot-edge-git.pages.dev';
 fetch(EDGE + '/api/blogger-feed?max=500')
 ```
 
-The current `11_infinite.js` still fetches Blogger directly. The next step is switching its feed/post fetch calls to this edge API and adding `<link rel="preconnect">` for the Pages host.
+The live `11_infinite.js` (CDN `v1.0.2`) uses this edge API and falls back to Blogger directly if the edge call fails.
 
 ## GitHub auto deploy
 
 This repository is intended to be connected to the Pages project:
 
 - Repository: `kimjundong7080-crypto/reddit-blogspot-edge`
-- Pages project: `reddit-blogspot-edge`
+- Pages project: `reddit-blogspot-edge-git`
 - Production branch: `main`
 - Build command: none
 - Build output directory: `public`
 - Functions directory: `functions/`
 
-In Cloudflare Pages → project → Settings → Builds & deployments → Git repository, connect the repository above. Pushes to `main` then deploy automatically.
+In Cloudflare Pages → project → Settings → Builds & deployments → Git repository, the repository above is connected. Pushes to `main` deploy automatically.
 
 ## Notes
 
